@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>User Dashboard</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 ml-3">
+			<div class="card-body">
+				<h1 class="text-center">Update You Profile</h1>
+				<div class="container-fluid mt-1">
+					<div class="row">
+						<div class="col-md-8 offset-md-2">
+							<form novalidate th:action="@{/user/process-user-update}"
+								th:object="${user}" enctype="multipart/form-data"
+								method="POST" class="mt-2">
+								
+								<input type="hidden" th:value="${user.id}" name="id"/>
+								
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-user"></i>
+										</div>
+									</div>
+									<input type="text" id="firstName"
+										th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+										name="name" placeholder="Enter First Name"
+										class="form-control" th:value="${user.name}" />
+									<div class="invalid-feedback"
+										th:each="e : ${#fields.errors('name')}" th:text="${e}"></div>
+								</div>
+
+
+								<div class="input-group mt-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">@</div>
+									</div>
+									<input type="email" id="email" name="email"
+										th:classappend="${#fields.hasErrors('email')?'is-invalid':''}"
+										placeholder="Enter your  email" class="form-control"
+										th:value="${user.email}" />
+									<div class="invalid-feedback"
+										th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
+								</div>
+
+								<div class="form-group mt-3">
+									<textarea placeholder="Enter contact description"
+										th:text="${user.about}" name="about"
+										id="description" class="form-control" rows="10"></textarea>
+								</div>
+
+								<div class="custom-file">
+									<input type="file" name="image1" />
+								</div>
+
+								<div class="container text-center">
+									<button type="submit" class="btn btn-outline-primary"> Update </button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script
+			src="https://cdn.tiny.cloud/1/4sc05c7qar7vxiqqkz58wb41cufg6x7cos51iqgpl5haioiz/tinymce/5/tinymce.min.js"
+			referrerpolicy="origin"></script>
+		<script>
+			tinymce.init({
+				selector : '#description'
+			});
+		</script>
+	</section>
+</body>
+</html>
